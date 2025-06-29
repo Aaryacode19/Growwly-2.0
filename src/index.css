@@ -1,0 +1,731 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+  
+  body {
+    @apply bg-white dark:bg-black text-black dark:text-white font-mono;
+    font-feature-settings: "liga" 1, "calt" 1;
+    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar only on mobile devices */
+  @media (max-width: 768px) {
+    /* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) on mobile */
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+
+    /* Hide scrollbar for Firefox on mobile */
+    html {
+      scrollbar-width: none;
+    }
+
+    /* For Internet Explorer and Edge on mobile */
+    body {
+      -ms-overflow-style: none;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-black dark:bg-white text-white dark:text-black px-4 py-2 border border-black dark:border-white hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white font-medium;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .btn-secondary {
+    @apply bg-white dark:bg-black text-black dark:text-white px-4 py-2 border border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black font-medium;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-black dark:border-white bg-white dark:bg-black text-black dark:text-white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .input-field:focus {
+    @apply outline-none ring-2 ring-black dark:ring-white;
+    border-color: black !important;
+  }
+  
+  .dark .input-field:focus {
+    border-color: white !important;
+  }
+  
+  .input-field::placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .input-field::-webkit-input-placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .input-field::-moz-placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .input-field:-ms-input-placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .card {
+    @apply border border-black dark:border-white bg-white dark:bg-black p-4 sm:p-6;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* UNIVERSAL SCROLLBAR HIDING */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+
+  /* Hide scrollbars in modals and popups */
+  .modal-content,
+  .popup-content,
+  .dropdown-content,
+  .chat-container,
+  .achievement-modal,
+  .profile-modal {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .modal-content::-webkit-scrollbar,
+  .popup-content::-webkit-scrollbar,
+  .dropdown-content::-webkit-scrollbar,
+  .chat-container::-webkit-scrollbar,
+  .achievement-modal::-webkit-scrollbar,
+  .profile-modal::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Apply to all overflow containers */
+  .overflow-y-auto,
+  .overflow-x-auto,
+  .overflow-auto {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar,
+  .overflow-x-auto::-webkit-scrollbar,
+  .overflow-auto::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Enhanced date input styling */
+input[type="date"] {
+  /* Inherit all styling from input-field class */
+  color-scheme: light dark;
+  cursor: pointer;
+  position: relative;
+  
+  /* Ensure proper text color in both themes */
+  color: rgb(0, 0, 0) !important;
+}
+
+.dark input[type="date"] {
+  color: rgb(255, 255, 255) !important;
+}
+
+/* Style the calendar picker indicator - make it cover more area */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+  filter: invert(0);
+  background: transparent;
+  color: inherit;
+  width: 40px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Firefox date input styling */
+input[type="date"]::-moz-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+  background: transparent;
+  color: inherit;
+  width: 40px;
+  height: 100%;
+}
+
+/* Ensure date input maintains border on focus */
+input[type="date"]:focus {
+  color: rgb(0, 0, 0) !important;
+  border-color: black !important;
+  outline: none;
+  ring: 2px;
+  ring-color: black;
+}
+
+.dark input[type="date"]:focus {
+  color: rgb(255, 255, 255) !important;
+  border-color: white !important;
+  ring-color: white;
+}
+
+/* Fix date input value visibility */
+input[type="date"]::-webkit-datetime-edit {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-day-field {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: inherit;
+}
+
+/* Enhanced theme transition effects */
+.theme-ripple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    rgba(0,0,0,0.12) 0%, 
+    rgba(0,0,0,0.08) 30%, 
+    rgba(0,0,0,0.04) 60%, 
+    transparent 100%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+}
+
+.theme-ripple.active {
+  width: 400vmax;
+  height: 400vmax;
+  opacity: 1;
+}
+
+/* Dark mode ripple effect */
+.dark .theme-ripple {
+  background: radial-gradient(circle, 
+    rgba(255,255,255,0.12) 0%, 
+    rgba(255,255,255,0.08) 30%, 
+    rgba(255,255,255,0.04) 60%, 
+    transparent 100%);
+}
+
+/* Page transition overlay for theme changes */
+@keyframes themeTransition {
+  0% { opacity: 0; }
+  50% { opacity: 0.1; }
+  100% { opacity: 0; }
+}
+
+.theme-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(0,0,0,0.05) 0%, 
+    rgba(255,255,255,0.05) 50%, 
+    rgba(0,0,0,0.05) 100%);
+  pointer-events: none;
+  z-index: 9998;
+  animation: themeTransition 1s ease-in-out;
+}
+
+/* Growwly-specific animations */
+@keyframes growwlyPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+}
+
+.animate-growwly-pulse {
+  animation: growwlyPulse 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+/* Growwly minimize animation - slides up and to the left */
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-10px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.animate-slide-in-from-right {
+  animation: slideInFromRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Enhanced animations */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover effects */
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading animation for theme button */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(0,0,0,0.2), 0 0 30px rgba(0,0,0,0.1);
+  }
+}
+
+.dark .animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.dark .animate-pulse-glow {
+  box-shadow: 0 0 5px rgba(255,255,255,0.1);
+}
+
+.dark .animate-pulse-glow:hover {
+  box-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 30px rgba(255,255,255,0.1);
+}
+
+/* Enhanced focus states */
+.input-field:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark .input-field:focus {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Button hover animations */
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dark .btn-primary:hover, .dark .btn-secondary:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Card hover effects */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card:hover {
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth page transitions */
+.page-transition {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme button special effects */
+.theme-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.theme-button:hover::before {
+  left: 100%;
+}
+
+/* Enhanced header button styling */
+.btn-secondary {
+  @apply text-sm font-medium;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* Improved button spacing and sizing */
+@media (min-width: 768px) {
+  .btn-secondary {
+    min-width: auto;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .btn-secondary {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 640px) {
+  .card {
+    @apply p-3 sm:p-4;
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  /* Ensure proper spacing on mobile */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Use dynamic viewport height on mobile */
+  }
+}
+
+/* Enhanced Mobile Menu Styling */
+@media (max-width: 768px) {
+  /* Mobile menu button improvements */
+  .mobile-menu-button {
+    position: relative;
+    z-index: 51;
+    touch-action: manipulation;
+  }
+  
+  /* Enhanced mobile menu styling */
+  .mobile-menu {
+    /* Slide-in animation */
+    animation: slideInRight 0.3s ease-out;
+    /* Enhanced shadow */
+    box-shadow: -10px 0 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dark .mobile-menu {
+    box-shadow: -10px 0 25px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Mobile menu slide animation */
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Enhanced backdrop */
+  .mobile-menu-backdrop {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/* Enhanced modal styling for better mobile experience */
+@media (max-width: 768px) {
+  /* Ensure modals are properly centered and sized on mobile */
+  .modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .modal-content {
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    /* Hide scrollbar on mobile modals */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .modal-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Prevent modal content from being too close to screen edges */
+  .modal-content .p-6 {
+    padding: 20px;
+  }
+
+  /* Ensure delete modal buttons are properly sized on mobile */
+  .modal-content .flex.gap-3 {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modal-content .flex.gap-3 button {
+    width: 100%;
+    padding: 12px 16px;
+  }
+}
+
+/* Fix for any potential stacking context issues */
+.progress-card {
+  position: relative;
+  z-index: 1;
+}
+
+.progress-card .delete-button {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure proper modal backdrop behavior */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  touch-action: none;
+}
+
+/* Prevent scroll issues when modals are open */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Enhanced mobile touch targets */
+@media (max-width: 768px) {
+  /* Ensure all interactive elements have proper touch targets */
+  button, .btn-primary, .btn-secondary, a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Exception for icon-only buttons */
+  button[title], .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+  }
+
+  /* Mobile tab navigation specific styles */
+  .mobile-tab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .mobile-tab-button {
+    min-height: 60px;
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-tab-button span {
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+}
+
+/* Ensure proper text wrapping and sizing on very small screens */
+@media (max-width: 360px) {
+  .mobile-tab-button span {
+    font-size: 10px;
+  }
+  
+  .card {
+    @apply p-2;
+  }
+  
+  h1 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Growwly AI specific styles */
+.growwly-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
+}
+
+.growwly-text-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced shadow effects */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+.dark .shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(255, 255, 255, 0.1);
+}
+
+/* Modal positioning improvements */
+.modal-positioned {
+  position: absolute;
+  transform: translateX(-50%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+/* Ensure modals are always visible and properly positioned */
+@media (max-height: 600px) {
+  .modal-positioned {
+    max-height: calc(100vh - 20px);
+    top: 10px !important;
+  }
+}
