@@ -36,6 +36,8 @@ function AppContent() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/profile/:userId" element={<UserProfile />} />
         <Route path="/pomodoro" element={<Pomodoro />} />
+        {/* Catch-all route for 404s - redirect to home */}
+        <Route path="*" element={<Community />} />
       </Routes>
       
       {/* Bot Button - Rendered at App level, outside of Layout */}
