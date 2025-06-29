@@ -27,6 +27,7 @@ export function ShareProfileModal({ isOpen, onClose, profile, stats }: ShareProf
     }
   }, [isOpen])
 
+  // Generate the correct profile URL
   const profileUrl = `${window.location.origin}/profile/${profile.id}`
   
   const shareText = `Check out my progress on Growwly! 🚀\n\n` +
@@ -43,6 +44,19 @@ export function ShareProfileModal({ isOpen, onClose, profile, stats }: ShareProf
       setTimeout(() => setCopied(false), 2000)
     } catch (error) {
       console.error('Failed to copy link:', error)
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea')
+      textArea.value = profileUrl
+      document.body.appendChild(textArea)
+      textArea.select()
+      try {
+        document.execCommand('copy')
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      } catch (fallbackError) {
+        console.error('Fallback copy failed:', fallbackError)
+      }
+      document.body.removeChild(textArea)
     }
   }
 
@@ -66,6 +80,24 @@ export function ShareProfileModal({ isOpen, onClose, profile, stats }: ShareProf
     
     if (shareUrl) {
       window.open(shareUrl, '_blank', 'width=600,height=400')
+    }
+  }
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${profile.full_name || 'User'}'s Progress on Growwly`,
+          text: shareText,
+          url: profileUrl,
+        })
+      } catch (error) {
+        // User cancelled or error occurred, fallback to copy
+        handleCopyLink()
+      }
+    } else {
+      // Fallback to copy
+      handleCopyLink()
     }
   }
 
@@ -143,6 +175,17 @@ export function ShareProfileModal({ isOpen, onClose, profile, stats }: ShareProf
             </div>
           </div>
 
+          {/* Quick Share Button (Mobile-friendly) */}
+          <div className="mb-6">
+            <button
+              onClick={handleNativeShare}
+              className="btn-primary w-full flex items-center justify-center gap-2 mb-4"
+            >
+              <Share2 size={16} />
+              Share Profile
+            </button>
+          </div>
+
           {/* Copy Link */}
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">
@@ -154,6 +197,7 @@ export function ShareProfileModal({ isOpen, onClose, profile, stats }: ShareProf
                 value={profileUrl}
                 readOnly
                 className="input-field flex-1 text-sm"
+                onClick={(e) => e.target.select()}
               />
               <button
                 onClick={handleCopyLink}
